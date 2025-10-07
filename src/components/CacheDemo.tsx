@@ -89,7 +89,7 @@ const CacheDemo = () => {
             Spring Boot Cache Demo
           </h1>
           <p className="text-muted-foreground">
-            Test backend caching performance by fetching the same item ID multiple times
+            Comprueba el rendimiento del almacenamiento en caché del backend recuperando el mismo ID de elemento varias veces.
           </p>
         </div>
 
