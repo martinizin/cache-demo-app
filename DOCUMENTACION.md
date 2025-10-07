@@ -1,18 +1,5 @@
 # 📚 Documentación Frontend - Cache Demo App
 
-## 📋 Tabla de Contenidos
-
-1. [Descripción General](#-descripción-general)
-2. [Arquitectura del Proyecto](#-arquitectura-del-proyecto)
-3. [Stack Tecnológico](#-stack-tecnológico)
-4. [Estructura de Archivos](#-estructura-de-archivos)
-5. [Componentes Principales](#-componentes-principales)
-6. [API y Servicios](#-api-y-servicios)
-7. [Características Principales](#-características-principales)
-8. [Guía de Instalación](#-guía-de-instalación)
-9. [Guía de Uso](#-guía-de-uso)
-10. [Configuración](#️-configuración)
-11. [Mejores Prácticas](#-mejores-prácticas)
 
 ---
 
@@ -1066,102 +1053,14 @@ VITE_API_BASE_URL=https://api.midominio.com
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 ```
 
-### Despliegue en Vercel/Netlify
 
-```bash
-# Instalar CLI
-npm install -g vercel
 
-# Deploy
-vercel --prod
-```
 
-**Configuración de rewrites (para SPA):**
-```json
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
-```
 
----
 
-## 📚 Recursos Adicionales
-
-### Documentación Oficial
-
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Recharts](https://recharts.org/)
-- [Axios](https://axios-http.com/)
-
-### Guías Relacionadas
-
-- [React Hooks](https://react.dev/reference/react)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-- [Vite Guide](https://vitejs.dev/guide/)
-
----
-
-## 📝 Changelog
-
-### v1.0.0 (Actual)
-
-**Características:**
-- ✅ Visualización de rendimiento en tiempo real
-- ✅ Historial de solicitudes (últimas 20)
-- ✅ Control de caché (por ID y global)
-- ✅ Benchmarking automatizado con gráficos
-- ✅ Sistema de notificaciones (toasts)
-- ✅ Atajos de teclado
-- ✅ Accesibilidad completa (A11y)
-- ✅ UI responsive y dark theme
-- ✅ Internacionalización (español)
-
----
-
-## 🤝 Contribución
-
-Para contribuir al proyecto:
-
-1. Fork del repositorio
-2. Crear rama de feature (`git checkout -b feature/nueva-caracteristica`)
-3. Commit de cambios (`git commit -m 'Agrega nueva característica'`)
-4. Push a la rama (`git push origin feature/nueva-caracteristica`)
-5. Abrir Pull Request
-
-**Guías de estilo:**
-- Seguir convenciones de TypeScript
-- Mantener componentes pequeños y enfocados
-- Agregar tipos explícitos
-- Escribir código auto-documentado
-- Agregar comentarios solo cuando sea necesario
-
----
-
-## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
-
----
-
-## 👥 Autores
+## 👥 Autor
 
 - **Desarrollador Principal:** [martinizin](https://github.com/martinizin)
 - **Repositorio:** [cache-demo-app](https://github.com/martinizin/cache-demo-app)
 
----
 
-## 📞 Soporte
-
-Para reportar bugs o solicitar características:
-- **Issues:** [GitHub Issues](https://github.com/martinizin/cache-demo-app/issues)
-- **Discusiones:** [GitHub Discussions](https://github.com/martinizin/cache-demo-app/discussions)
-
----
-
-**Última actualización:** Octubre 2025
