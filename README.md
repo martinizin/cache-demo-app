@@ -1,17 +1,38 @@
-# 📚 Documentación Frontend - Cache Demo App
+# � Cache Demo App - Documentación Técnica
 
+<div align="center">
+
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5.4.19-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-6.30.1-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
+
+**Aplicación web interactiva para demostrar y analizar el rendimiento del sistema de caché de Spring Boot**
+
+</div>
 
 ---
 
 ## 🎯 Descripción General
 
-**Cache Demo App** es una aplicación web frontend diseñada para **demostrar y visualizar el rendimiento del sistema de caché** de un backend Spring Boot en tiempo real. Permite a los usuarios ejecutar solicitudes HTTP, observar métricas de rendimiento, comparar tiempos de respuesta entre cache hits y cache misses, y ejecutar pruebas de rendimiento (benchmarks) para analizar el comportamiento del caché.
+**Cache Demo App** es una aplicación web frontend moderna construida con React, TypeScript y Vite que proporciona una interfaz interactiva para **demostrar, monitorear y analizar el rendimiento del sistema de caché** de un backend Spring Boot en tiempo real. La aplicación incluye funcionalidades avanzadas como carrito de compras, navegación multi-página y herramientas de benchmarking automatizadas.
+
+### Características Principales
+
+- **📊 Visualización en Tiempo Real:** Métricas duales de cliente y servidor con detección automática de cache hits/misses
+- **🛒 Carrito de Compras:** Sistema completo con persistencia en LocalStorage y modal accesible
+- **🚀 Ejecutor de Benchmarks:** Página dedicada con pruebas automatizadas (1 cold + N warm calls)
+- **📈 Gráficos Interactivos:** Visualización de datos de rendimiento con Recharts
+- **⌨️ Atajos de Teclado:** Navegación y controles rápidos para power users
+- **♿ Accesibilidad Completa:** ARIA labels, focus management, navegación por teclado
+- **🗂️ Navegación Multi-página:** Routing con React Router para organización modular
 
 ### Propósito
 
-- **Educativo:** Ayuda a desarrolladores y estudiantes a entender cómo funciona el caching en aplicaciones backend.
-- **Monitoreo:** Permite visualizar en tiempo real el impacto del caché en el rendimiento.
-- **Testing:** Ofrece herramientas para realizar pruebas de rendimiento y validar configuraciones de caché.
+- **Educativo:** Herramienta perfecta para enseñar conceptos de caching y arquitecturas de sistemas
+- **Monitoreo:** Observación en tiempo real del comportamiento del caché en aplicaciones enterprise
+- **Testing:** Suite completa de pruebas de rendimiento y análisis de comportamiento
+- **Demostración:** Showcase visual de la diferencia entre cache hits y misses
 
 ---
 
@@ -109,7 +130,40 @@ El proyecto sigue una arquitectura **Component-Based** de React con separación 
 
 ---
 
-## 📁 Estructura de Archivos
+## ✨ Features Implementadas
+
+### 🏠 Página Principal (/)
+- **Dashboard Principal:** Interfaz unificada con controles de caché y carrito
+- **Solicitudes HTTP:** Input para ID de elemento con validación en tiempo real
+- **Controles de Caché:** Eliminación por ID específico y limpieza global
+- **Carrito Modal:** Sistema de compras con modal accesible
+- **Historial de Solicitudes:** Buffer circular de las últimas 20 peticiones
+- **Atajos de Teclado:**
+  - `Ctrl+Shift+D`: Limpiar caché global
+  - `Ctrl+L`: Limpiar historial de solicitudes
+
+### 🛒 Sistema de Carrito de Compras
+- **Hook Personalizado:** `useCart` con persistencia en LocalStorage
+- **Modal Accesible:** Portal con focus trap y navegación por teclado
+- **Gestión de Estado:** IDs únicos, agregar/remover items, cálculo de total
+- **Integración API:** Carga automática de detalles usando `fetchItem(id)`
+- **Estados de UI:** Loading, error, vacío con feedback visual apropiado
+
+### � Página de Benchmarks (/benchmark)
+- **Página Dedicada:** Interfaz especializada para pruebas de rendimiento
+- **Ejecutor Automatizado:** 1 llamada en frío + N llamadas en caliente
+- **Visualización de Datos:** Gráficos comparativos con Recharts
+- **Métricas Detalladas:** Tabla de resultados con tiempos individuales
+- **Navegación:** Botón de retorno a página principal
+
+### ♿ Características de Accesibilidad
+- **ARIA Completo:** Labels, roles y descripciones en todos los elementos
+- **Navegación por Teclado:** Tab, Enter, Escape funcionan correctamente
+- **Focus Management:** Trap de foco en modales con restauración apropiada
+- **Estados Visuales:** Indicadores claros de loading, error y éxito
+- **Contraste:** Colores y tipografía accesibles en tema oscuro
+
+## �📁 Estructura de Archivos
 
 ```
 cache-demo-app/
@@ -120,23 +174,25 @@ cache-demo-app/
 │
 ├── src/                             # Código fuente
 │   ├── api/                         # Capa de servicios/API
-│   │   └── items.ts                 # Funciones para consumir API REST
+│   │   └── items.ts                 # Funciones REST + interface Item con price
 │   │
 │   ├── components/                  # Componentes React
-│   │   ├── CacheDemo.tsx            # Componente principal (container)
-│   │   ├── RequestHistory.tsx       # Historial de solicitudes
-│   │   ├── Benchmark.tsx            # Ejecutor de benchmarks
-│   │   └── ui/                      # Componentes UI de shadcn
+│   │   ├── CacheDemo.tsx            # Dashboard principal con carrito modal
+│   │   ├── RequestHistory.tsx       # Historial con botón limpiar + Ctrl+L
+│   │   ├── Benchmark.tsx            # Runner de benchmarks (movido a página)
+│   │   ├── Cart.tsx                 # Componente de carrito reutilizable
+│   │   ├── CartModal.tsx            # Wrapper de Cart en Modal
+│   │   ├── Modal.tsx                # Modal accesible con Portal + focus trap
+│   │   └── ui/                      # Componentes shadcn/ui
 │   │       ├── button.tsx
 │   │       ├── card.tsx
 │   │       ├── input.tsx
 │   │       ├── badge.tsx
-│   │       ├── label.tsx
 │   │       ├── toast.tsx
-│   │       ├── toaster.tsx
-│   │       └── use-toast.ts
+│   │       └── ... (otros componentes UI)
 │   │
 │   ├── hooks/                       # Custom React Hooks
+│   │   ├── useCart.ts               # Hook de carrito con LocalStorage
 │   │   ├── use-mobile.tsx
 │   │   └── use-toast.ts
 │   │
@@ -144,41 +200,69 @@ cache-demo-app/
 │   │   └── utils.ts                 # Funciones auxiliares (cn, etc.)
 │   │
 │   ├── pages/                       # Páginas/rutas de la aplicación
-│   │   ├── Index.tsx                # Página principal
+│   │   ├── Index.tsx                # Página principal (CacheDemo)
+│   │   ├── BenchmarkPage.tsx        # Página dedicada de benchmarks
 │   │   └── NotFound.tsx             # Página 404
 │   │
-│   ├── App.tsx                      # Componente raíz de la aplicación
+│   ├── App.tsx                      # Router principal con rutas
 │   ├── main.tsx                     # Entry point de la aplicación
 │   ├── index.css                    # Estilos globales + Tailwind
 │   └── vite-env.d.ts                # Tipos de Vite
 │
 ├── index.html                       # HTML base
-├── vite.config.ts                   # Configuración de Vite
+├── vite.config.ts                   # Configuración de Vite + proxy
 ├── tailwind.config.ts               # Configuración de Tailwind
 ├── tsconfig.json                    # Configuración de TypeScript
-├── package.json                     # Dependencias y scripts
+├── package.json                     # Dependencias + scripts
 ├── postcss.config.js                # Configuración de PostCSS
 ├── eslint.config.js                 # Configuración de ESLint
-└── components.json                  # Configuración de shadcn/ui
+├── components.json                  # Configuración de shadcn/ui
+├── README-ES.md                     # README conciso en español
+└── DOCUMENTACION.md                 # Documentación técnica completa
+```
+
+## 🗺️ Arquitectura de Navegación
+
+### Rutas Configuradas
+
+| Ruta | Componente | Descripción |
+|------|------------|-------------|
+| `/` | `Index.tsx` → `CacheDemo.tsx` | Dashboard principal con controles de caché y carrito |
+| `/benchmark` | `BenchmarkPage.tsx` | Página dedicada para pruebas de rendimiento |
+| `*` | `NotFound.tsx` | Página 404 para rutas inexistentes |
+
+### Router Configuration
+
+La aplicación utiliza **React Router v6** con `BrowserRouter` para navegación SPA:
+
+```typescript
+// src/App.tsx
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<Index />} />
+    <Route path="/benchmark" element={<BenchmarkPage />} />
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+</BrowserRouter>
 ```
 
 ---
 
 ## 🧩 Componentes Principales
 
-### 1. **CacheDemo.tsx** (Componente Contenedor Principal)
+### 1. **CacheDemo.tsx** (Dashboard Principal)
 
 **Ubicación:** `src/components/CacheDemo.tsx`
 
-**Propósito:** Componente principal que orquesta toda la funcionalidad de la aplicación. Actúa como contenedor que gestiona el estado global y coordina las interacciones entre subcomponentes.
+**Propósito:** Componente principal que orquesta la funcionalidad de demostración de caché y gestiona el carrito de compras mediante modal.
 
 #### Responsabilidades
 
-- Gestión del estado de la aplicación (loading, resultados, historial)
-- Orquestación de peticiones HTTP al backend
-- Manejo de eventos de usuario (clicks, teclado)
-- Integración de componentes hijos (RequestHistory, Benchmark)
-- Gestión de notificaciones (toasts)
+- Gestión del estado de la aplicación (loading, resultados, historial, carrito)
+- Orquestación de peticiones HTTP al backend con métricas de rendimiento
+- Manejo de eventos de usuario y atajos de teclado (`Ctrl+Shift+D`, `Ctrl+L`)
+- Integración de carrito modal con gestión de foco
+- Coordinación con RequestHistory para re-ejecución de solicitudes
 
 #### Estado Principal
 
@@ -186,18 +270,73 @@ cache-demo-app/
 interface RequestResult {
   id: string;              // UUID único de la solicitud
   timestamp: Date;         // Momento de la solicitud
-  item: Item;              // Datos del item obtenido
+  item: Item;              // Datos del item (incluye price)
   clientMs: number;        // Tiempo de respuesta (cliente)
   serverMs: number;        // Tiempo de procesamiento (servidor)
-  isCacheHit: boolean;     // Si fue cache hit o miss
+  isCacheHit: boolean;     // Si fue cache hit (<50ms) o miss
 }
 
 const [itemId, setItemId] = useState("1");              // ID del item a consultar
 const [loading, setLoading] = useState(false);          // Estado de carga general
 const [evictingAll, setEvictingAll] = useState(false);  // Estado de limpieza de caché
+const [cartOpen, setCartOpen] = useState(false);        // Estado del modal de carrito
 const [results, setResults] = useState<RequestResult[]>([]); // Historial de resultados
-const [history, setHistory] = useState<HistoryEntry[]>([]); // Historial compacto (20 últimos)
+const [history, setHistory] = useState<HistoryEntry[]>([]); // Historial compacto
+const { ids, add, remove, clear, count } = useCart();   // Hook del carrito
 ```
+
+### 2. **BenchmarkPage.tsx** (Página de Pruebas)
+
+**Ubicación:** `src/pages/BenchmarkPage.tsx`
+
+**Propósito:** Página independiente dedicada exclusivamente a la ejecución de pruebas de rendimiento automatizadas.
+
+#### Características
+
+- **Navegación:** Botón de retorno a página principal con React Router Link
+- **Información Contextual:** Card explicativo sobre el funcionamiento de los benchmarks
+- **Integración:** Reutiliza el componente `Benchmark.tsx` existente
+- **UI Consistente:** Mantiene el diseño y tema de la aplicación
+
+### 3. **Sistema de Carrito de Compras**
+
+#### **useCart.ts** (Custom Hook)
+
+**Ubicación:** `src/hooks/useCart.ts`
+
+**Funcionalidades:**
+- Persistencia automática en LocalStorage con clave `cartIds:v1`
+- Estado reactivo con IDs únicos (no duplicados)
+- API simple: `add(id)`, `remove(id)`, `clear()`, `count`, `ids`
+
+#### **Cart.tsx** (Componente de Carrito)
+
+**Ubicación:** `src/components/Cart.tsx`
+
+**Características:**
+- Carga secuencial de detalles usando `fetchItem(id)` 
+- Cálculo automático de total con formato de moneda
+- Estados de loading, error y vacío con UI apropiada
+- Botones accesibles para remover items individuales y vaciar carrito
+
+#### **CartModal.tsx** (Modal Wrapper)
+
+**Ubicación:** `src/components/CartModal.tsx`
+
+**Propósito:** Envoltorio que combina el componente Modal accesible con Cart
+
+#### **Modal.tsx** (Modal Accesible)
+
+**Ubicación:** `src/components/Modal.tsx`
+
+**Features de Accesibilidad:**
+- **Portal:** Renderizado en `document.body` para z-index correcto
+- **Focus Trap:** Navegación Tab/Shift+Tab contenida dentro del modal
+- **Escape Handler:** Cierre con tecla Escape
+- **Backdrop Click:** Cierre al hacer click fuera del contenido
+- **Focus Restoration:** Devuelve el foco al elemento que abrió el modal
+- **ARIA:** `role="dialog"`, `aria-modal="true"`, `aria-labelledby`
+- **Scroll Lock:** Previene scroll del body cuando está abierto
 
 #### Funciones Principales
 
@@ -923,7 +1062,104 @@ function display(item: { id: string; name: string }) { }
 
 ---
 
-## 🔍 Debugging y Troubleshooting
+## � Instalación y Uso
+
+### Prerrequisitos
+
+- **Node.js** 18+ y npm
+- **Backend Spring Boot** ejecutándose en `http://localhost:8080`
+- Navegador moderno con soporte para ES6+
+
+### Instalación Rápida
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd cache-demo-app
+
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev
+
+# Acceder a la aplicación
+# http://localhost:5173
+```
+
+### Scripts Disponibles
+
+```bash
+npm run dev        # Servidor de desarrollo con hot reload
+npm run build      # Build de producción
+npm run preview    # Preview del build de producción
+npm run lint       # Análisis de código con ESLint
+```
+
+---
+
+## ⌨️ Atajos de Teclado
+
+| Atajo | Acción | Contexto |
+|-------|--------|----------|
+| `Ctrl+Shift+D` | Limpiar caché global | Página principal |
+| `Ctrl+L` | Limpiar historial de solicitudes | Página principal |
+| `Enter` | Ejecutar solicitud | Campo de input activo |
+| `Escape` | Cerrar modal | Modal de carrito abierto |
+| `Tab` / `Shift+Tab` | Navegación por teclado | Todos los elementos |
+
+---
+
+## 🎯 Guía de Uso
+
+### Flujo Básico de Demostración
+
+1. **Ejecutar Solicitud:**
+   - Ingresar ID en el campo de texto (ej: `1`, `2`, `3`)
+   - Hacer click en "Obtener Elemento" o presionar `Enter`
+   - Observar métricas de tiempo en la respuesta
+
+2. **Observar Cache Behavior:**
+   - Ejecutar la misma solicitud nuevamente
+   - Comparar tiempos: primera ejecución (miss) vs segunda (hit)
+   - Identificar cache hits por el badge verde y tiempo <50ms
+
+3. **Gestionar Carrito:**
+   - Hacer click en "Agregar al Carrito" después de obtener un elemento
+   - Observar el badge de contador en el botón "Carrito 🛒"
+   - Abrir modal haciendo click en el botón de carrito
+   - Gestionar items individualmente o vaciar todo
+
+4. **Ejecutar Benchmarks:**
+   - Navegar a `/benchmark` usando el botón "Ejecutar Pruebas"
+   - Configurar número de llamadas warm y ID del elemento
+   - Observar gráfico comparativo y tabla de resultados detallados
+
+5. **Controlar Caché:**
+   - Usar "Eliminar ID" para limpiar caché de elemento específico
+   - Usar "Eliminar Todo" o `Ctrl+Shift+D` para limpieza global
+   - Verificar efecto ejecutando solicitudes antes/después
+
+---
+
+## 📊 Métricas y Análisis
+
+### Interpretación de Resultados
+
+- **Cache Hit (Verde):** Tiempo servidor <50ms, datos servidos desde caché
+- **Cache Miss (Amarillo):** Tiempo servidor >50ms, datos consultados en base de datos
+- **Tiempo Cliente:** Incluye latencia de red + procesamiento del navegador
+- **Tiempo Servidor:** Solo procesamiento backend (extraído del header `X-Server-TimeMs`)
+
+### Patrones Observables
+
+- **Primera Ejecución:** Siempre cache miss (datos no en caché)
+- **Ejecuciones Subsecuentes:** Cache hit si el backend está configurado correctamente
+- **Después de Evict:** Vuelve a ser cache miss hasta que se vuelva a cachear
+
+---
+
+## �🔍 Debugging y Troubleshooting
 
 ### Problema: "Backend no responde"
 
@@ -1058,9 +1294,81 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 
 
-## 👥 Autor
+---
 
-- **Desarrollador Principal:** [martinizin](https://github.com/martinizin)
+## 🎓 Consideraciones de Desarrollo
+
+### Arquitectura Escalable
+
+La aplicación está diseñada con principios de arquitectura limpia y separación de responsabilidades:
+
+- **Componentes Reutilizables:** Modal, Card, Cart pueden ser extraídos a una librería de componentes
+- **Custom Hooks:** `useCart` demuestra encapsulación de lógica de negocio
+- **API Layer:** Centralización de llamadas HTTP facilita mocking y testing
+- **Type Safety:** TypeScript estricto previene errores en tiempo de desarrollo
+
+### Patrones Implementados
+
+- **Container/Presenter Pattern:** CacheDemo como container, componentes UI como presenters
+- **Custom Hooks Pattern:** Encapsulación de estado y lógica en `useCart`
+- **Portal Pattern:** Modal renderizado fuera del árbol de componentes
+- **Compound Component Pattern:** Modal con título, contenido y controles
+
+### Performance Optimizations
+
+- **React 18 Features:** Uso de concurrent rendering para UI no bloqueante
+- **Vite HMR:** Hot Module Replacement para desarrollo rápido
+- **Tree Shaking:** Bundle optimizado eliminando código no utilizado
+- **Code Splitting:** Potencial para lazy loading de páginas con React.lazy
+
+---
+
+## � Recursos Adicionales
+
+### Documentación Relacionada
+
+- **[README-ES.md](./README-ES.md):** Guía rápida en español para usuarios finales
+- **[DOCUMENTACION.md](./DOCUMENTACION.md):** Documentación técnica completa con arquitectura detallada
+- **[shadcn/ui Docs](https://ui.shadcn.com/):** Documentación de la librería de componentes UI
+- **[React Router v6](https://reactrouter.com/):** Guía de navegación y routing
+
+### Learning Resources
+
+Esta aplicación sirve como ejemplo práctico de:
+- **Arquitecturas Frontend Modernas:** React + TypeScript + Vite stack
+- **Sistemas de Caché:** Conceptos de cache hits, misses y invalidación
+- **Accesibilidad Web:** Implementación de ARIA y navegación por teclado
+- **State Management:** Hooks personalizados y estado local eficiente
+- **Performance Monitoring:** Métricas en tiempo real y benchmarking
+
+---
+
+## 👥 Información del Proyecto
+
+- **Desarrollador Principal:** Martin Jimenez ([martinizin](https://github.com/martinizin))
 - **Repositorio:** [cache-demo-app](https://github.com/martinizin/cache-demo-app)
+- **Licencia:** MIT
+- **Versión:** 1.2.0
+- **Última Actualización:** Octubre 2025
+
+### Contribuciones
+
+El proyecto está abierto a contribuciones que mejoren la funcionalidad, accesibilidad o documentación. Las áreas de interés incluyen:
+
+- **Testing:** Implementación de unit tests y e2e tests
+- **Internacionalización:** Soporte para múltiples idiomas
+- **Temas:** Implementación de tema claro/oscuro toggleable
+- **PWA:** Conversión a Progressive Web App
+- **Analytics:** Integración de métricas avanzadas de rendimiento
+
+---
+
+<div align="center">
+
+**Cache Demo App** - Demostrando el poder del caching en aplicaciones modernas
+
+Made with ❤️ and ⚡ by **Martin Jimenez**
+
+</div>
 
 

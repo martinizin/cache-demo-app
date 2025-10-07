@@ -38,6 +38,7 @@ const RequestHistory = ({ history, onClearHistory, onRerun }: RequestHistoryProp
           variant="outline"
           size="sm"
           className="border-border hover:bg-destructive hover:text-destructive-foreground"
+          aria-label="Borrar historial de solicitudes"
         >
           <Trash2 className="w-4 h-4 mr-2" />
           Limpiar Historial

@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Database, Zap, Trash2, AlignCenter } from "lucide-react";
+import { Clock, Database, Zap, Trash2, AlignCenter, ShoppingCart, Activity } from "lucide-react";
 import { fetchItem, evictById, evictAll, Item } from "@/api/items";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/useCart";
 import RequestHistory, { HistoryEntry } from "@/components/RequestHistory";
-import Benchmark from "@/components/Benchmark";
+import CartModal from "@/components/CartModal";
 
 interface RequestResult {
   id: string;
@@ -24,7 +26,9 @@ const CacheDemo = () => {
   const [evictingAll, setEvictingAll] = useState(false);
   const [results, setResults] = useState<RequestResult[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
   const { toast } = useToast();
+  const { ids, add, remove, clear, count } = useCart();
 
   const handleFetchItem = async (id?: string | number) => {
     const idToFetch = id !== undefined ? String(id) : itemId;
@@ -121,14 +125,39 @@ const CacheDemo = () => {
     handleFetchItem(id);
   };
 
-  // Atajo de teclado: Ctrl/Cmd + Shift + D para borrar caché global
+  const handleAddToCart = () => {
+    const idNum = parseInt(itemId.trim());
+    if (isNaN(idNum)) {
+      toast({
+        title: "ID Inválido",
+        description: "Por favor ingrese un ID numérico válido.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    add(idNum);
+    toast({
+      title: "Agregado al Carrito",
+      description: `El item #${idNum} fue agregado al carrito`,
+    });
+  };
+
+  // Atajos de teclado
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Ctrl/Cmd + Shift + D para borrar caché global
       if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'D') {
         event.preventDefault();
         if (!evictingAll && !loading) {
           handleEvictAll();
         }
+      }
+      
+      // Ctrl/Cmd + L para limpiar historial
+      if ((event.ctrlKey || event.metaKey) && event.key === 'l') {
+        event.preventDefault();
+        handleClearHistory();
       }
     };
 
@@ -159,9 +188,29 @@ const CacheDemo = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Spring Boot Cache Demo
-          </h1>
+          <div className="flex items-center justify-center gap-4">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Spring Boot Cache Demo
+            </h1>
+            <Button
+              onClick={() => setCartOpen(true)}
+              variant="outline"
+              size="sm"
+              className="border-border hover:bg-secondary relative"
+              aria-label={`Abrir carrito con ${count} elementos`}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Carrito 🛒
+              {count > 0 && (
+                <Badge 
+                  variant="secondary" 
+                  className="ml-2 h-5 w-5 p-0 text-xs flex items-center justify-center"
+                >
+                  {count}
+                </Badge>
+              )}
+            </Button>
+          </div>
           <p className="text-muted-foreground">
             Esta aplicación comprueba el rendimiento del almacenamiento en caché del backend recuperando el mismo ID de elemento varias veces.
           </p>
@@ -184,6 +233,16 @@ const CacheDemo = () => {
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               {loading ? "Obteniendo..." : "Obtener Elemento"}
+            </Button>
+            <Button
+              onClick={handleAddToCart}
+              disabled={loading || evictingAll || !itemId.trim()}
+              variant="outline"
+              className="border-border hover:bg-secondary"
+              aria-label="Agregar elemento al carrito"
+            >
+              <ShoppingCart className="w-4 h-4 mr-2" />
+              Agregar al Carrito
             </Button>
           </div>
           <div className="flex gap-2">
@@ -213,9 +272,10 @@ const CacheDemo = () => {
           <p className="text-sm text-muted-foreground mt-3">
             💡 Consejo: Obtenga el mismo ID dos veces para ver el rendimiento de la caché
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            ⌨️ Atajo: <kbd className="px-1.5 py-0.5 text-xs bg-secondary rounded border border-border">Ctrl+Shift+D</kbd> para limpiar caché global
-          </p>
+          <div className="text-xs text-muted-foreground mt-1 space-y-1">
+            <p>⌨️ Atajos: <kbd className="px-1.5 py-0.5 text-xs bg-secondary rounded border border-border">Ctrl+Shift+D</kbd> para limpiar caché global</p>
+            <p className="ml-7"><kbd className="px-1.5 py-0.5 text-xs bg-secondary rounded border border-border">Ctrl+L</kbd> para limpiar historial</p>
+          </div>
         </Card>
 
         {/* Request History */}
@@ -225,8 +285,29 @@ const CacheDemo = () => {
           onRerun={handleRerun}
         />
 
-        {/* Benchmark */}
-        <Benchmark />
+        {/* Benchmark Navigation */}
+        <Card className="p-6 border-border bg-card">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <Activity className="h-5 w-5 text-primary" />
+                Ejecutor de Prueba de Rendimiento
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Ejecuta pruebas automatizadas para medir el impacto del caché
+              </p>
+            </div>
+            <Link to="/benchmark">
+              <Button 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                aria-label="Ir al ejecutor de prueba de rendimiento"
+              >
+                <Activity className="h-4 w-4 mr-2" />
+                Ejecutar Pruebas
+              </Button>
+            </Link>
+          </div>
+        </Card>
 
         {/* Results */}
         <div className="space-y-4">
@@ -292,6 +373,15 @@ const CacheDemo = () => {
             </Card>
           ))}
         </div>
+
+        {/* Cart Modal */}
+        <CartModal
+          open={cartOpen}
+          onClose={() => setCartOpen(false)}
+          ids={ids}
+          onRemove={remove}
+          onClear={clear}
+        />
 
         {/* Footer */}
         <footer className="border-t border-border mt-4 pt-4" >
