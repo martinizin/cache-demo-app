@@ -103,6 +103,7 @@ const RequestHistory = ({ history, onClearHistory, onRerun }: RequestHistoryProp
       )}
     </Card>
   );
+
 };
 
 export default RequestHistory;

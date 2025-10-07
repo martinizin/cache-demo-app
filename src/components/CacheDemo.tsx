@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Database, Zap, Trash2 } from "lucide-react";
+import { Clock, Database, Zap, Trash2, AlignCenter } from "lucide-react";
 import { fetchItem, evictById, evictAll, Item } from "@/api/items";
 import { useToast } from "@/hooks/use-toast";
 import RequestHistory, { HistoryEntry } from "@/components/RequestHistory";
@@ -163,7 +163,7 @@ const CacheDemo = () => {
             Spring Boot Cache Demo
           </h1>
           <p className="text-muted-foreground">
-            Comprueba el rendimiento del almacenamiento en caché del backend recuperando el mismo ID de elemento varias veces.
+            Esta aplicación comprueba el rendimiento del almacenamiento en caché del backend recuperando el mismo ID de elemento varias veces.
           </p>
         </div>
 
@@ -292,6 +292,13 @@ const CacheDemo = () => {
             </Card>
           ))}
         </div>
+
+        {/* Footer */}
+        <footer className="border-t border-border mt-4 pt-4" >
+          <p className="text-center text-sm text-muted-foreground" >
+            Copyright © 2025 - CacheApp - Martin Jimenez.
+          </p>
+        </footer>
       </div>
     </div>
   );
