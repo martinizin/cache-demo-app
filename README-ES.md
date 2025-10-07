@@ -317,33 +317,7 @@ Para información detallada sobre:
 - Mejores prácticas
 - API reference completo
 
-**Ver:** [DOCUMENTACION.md](./DOCUMENTACION.md)
 
----
-
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas! Para contribuir:
-
-1. Fork del proyecto
-2. Crear rama de feature (`git checkout -b feature/nueva-caracteristica`)
-3. Commit cambios (`git commit -m 'Agrega característica X'`)
-4. Push a la rama (`git push origin feature/nueva-caracteristica`)
-5. Abrir Pull Request
-
-**Guías:**
-- Seguir convenciones de TypeScript
-- Mantener componentes pequeños y enfocados
-- Agregar tipos explícitos siempre
-- Testear cambios antes de PR
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT.
-
----
 
 ## 👤 Autor
 
@@ -353,28 +327,4 @@ Este proyecto está bajo la licencia MIT.
 
 ---
 
-## 🙏 Agradecimientos
 
-- [shadcn/ui](https://ui.shadcn.com/) por los componentes UI
-- [Radix UI](https://www.radix-ui.com/) por primitivos accesibles
-- [Recharts](https://recharts.org/) por las gráficas
-- [Lucide](https://lucide.dev/) por los iconos
-- Comunidad de React por el soporte
-
----
-
-## 📞 Soporte
-
-¿Necesitas ayuda? 
-- **Issues:** [GitHub Issues](https://github.com/martinizin/cache-demo-app/issues)
-- **Discusiones:** [GitHub Discussions](https://github.com/martinizin/cache-demo-app/discussions)
-
----
-
-<div align="center">
-
-**⭐ Si este proyecto te fue útil, considera darle una estrella en GitHub!**
-
-Hecho con ❤️ por [martinizin](https://github.com/martinizin)
-
-</div>
